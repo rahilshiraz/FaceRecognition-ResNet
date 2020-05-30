@@ -48,7 +48,7 @@ if __name__ == '__main__':
     cap = cv2.VideoCapture(0)
 
     dirpath = os.path.dirname(__file__)
-    print(dirpath)
+    # print(dirpath)
 
     modelFile = f"{dirpath}/model/res10_300x300_ssd_iter_140000.caffemodel"
     configFile = f"{dirpath}/model/deploy.prototxt.txt"
