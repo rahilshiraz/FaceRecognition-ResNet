@@ -1,3 +1,4 @@
+import os
 import cv2
 import numpy as np
 import imutils
@@ -46,12 +47,15 @@ if __name__ == '__main__':
 
     cap = cv2.VideoCapture(0)
 
-    modelFile = r"F:\dnn facerec\model\res10_300x300_ssd_iter_140000.caffemodel"
-    configFile = r"F:\dnn facerec\model\deploy.prototxt.txt"
+    dirpath = os.path.dirname(__file__)
+    print(dirpath)
+
+    modelFile = f"{dirpath}/model/res10_300x300_ssd_iter_140000.caffemodel"
+    configFile = f"{dirpath}/model/deploy.prototxt.txt"
     net = cv2.dnn.readNetFromCaffe(configFile, modelFile)
 
     rec = cv2.face.LBPHFaceRecognizer_create()
-    rec.read(r"recognizer\trainingdata.yml")
+    rec.read(f"{dirpath}/recognizer/trainingdata.yml")
 
     while True:
         _, frame = cap.read()
