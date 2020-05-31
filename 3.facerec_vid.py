@@ -62,11 +62,10 @@ if __name__ == '__main__':
 
         try:
             coordinates, face = detectface(frame,model)
+            gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
         except:
             print('No face detected')
             continue
-
-        gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
 
         res = recognizeface(gray,rec)
 

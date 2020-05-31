@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import imutils
 
-def detectface(img,net):
+def detectface(img,model):
 
     img = imutils.resize(img, width=750)
 
@@ -10,8 +10,8 @@ def detectface(img,net):
     blob = cv2.dnn.blobFromImage(cv2.resize(img,(300,300)),scalefactor=1.0,size=(300,300),
                                 mean=(104.0,177.0,123.0))
 
-    net.setInput(blob)
-    detections = net.forward()
+    model.setInput(blob)
+    detections = model.forward()
 
     for i in range(detections.shape[2]):
         confidence = detections[0,0,i,2]
@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
     modelFile = r"F:\dnn facerec\model\res10_300x300_ssd_iter_140000.caffemodel"
     configFile = r"F:\dnn facerec\model\deploy.prototxt.txt"
-    net = cv2.dnn.readNetFromCaffe(configFile, modelFile)
+    model = cv2.dnn.readNetFromCaffe(configFile, modelFile)
 
     rec = cv2.face.LBPHFaceRecognizer_create()
     rec.read(r"recognizer\trainingdata.yml")
@@ -57,12 +57,12 @@ if __name__ == '__main__':
         _, frame = cap.read()
 
         try:
-            coordinates, face = detectface(frame,net)
+            coordinates, face = detectface(frame,model)
+            gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
         except:
             print('No face detected')
             continue
 
-        gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
         res = recognizeface(gray,rec)
 
         print(res)
