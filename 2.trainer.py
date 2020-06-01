@@ -5,7 +5,6 @@ from PIL import Image
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 path = r"DATA"
-
 def getImageswithid(path):
     imagepaths = [os.path.join(path,f) for f in os.listdir(path)]
     faces = []
@@ -23,6 +22,5 @@ def getImageswithid(path):
 
 IDs, faces = getImageswithid(path)
 recognizer.train(faces, IDs)
-print('trained')
 recognizer.save(r"recognizer\trainingdata.yml")
-print('saved')
+print('Saved')
